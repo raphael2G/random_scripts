@@ -117,13 +117,9 @@ def simmulate_poisson_process(NUM_JOBS: float, ARRIVAL_RATE: float, JOB_SIZE_RAT
     return (mean_response_time, mean_jobs_in_system, running_average_busy_server)
     
 
-def firstPartOfStuff(): 
-    rates_to_check = [i/10.0 for i in range(5, 11, 1)]
-    NUMBER_OF_JOBS = 10**6
-    JOB_SIZE_RATE = 1
 
+def get_stats_for_poisson_process(JOB_SIZE_RATE, rates_to_check: list[float], NUMBER_OF_JOBS=10**6, with_graph=True):
     print(f"Simulating Poisson Processes with {NUMBER_OF_JOBS} number of jobs of the following arrival rates: ", rates_to_check)
-
 
     mean_response_times_list, mean_jobs_in_system_list, server_utilization_list = [], [], []
 
@@ -134,28 +130,17 @@ def firstPartOfStuff():
         server_utilization_list.append(server_utilization)
 
     print("!!FINISHED PROCESS!!")
-    plot_two_graphs(rates_to_check, mean_jobs_in_system_list,  mean_response_times_list, server_utilization_list)
 
+    if (with_graph):
+        plot_two_graphs(rates_to_check, mean_jobs_in_system_list,  mean_response_times_list, server_utilization_list)
 
 
 if __name__ == "__main__":
-    rates_to_check = [2*i/10.0 for i in range(5, 10, 1)]
-    NUMBER_OF_JOBS = 10**6
-    JOB_SIZE_RATE = 2 
+    rates_to_check1 = [i/10.0 for i in range(5, 11, 1)]  
+    get_stats_for_poisson_process(1, rates_to_check1)
 
-    print(f"Simulating Poisson Processes with {NUMBER_OF_JOBS} number of jobs of the following arrival rates: ", rates_to_check)
-
-
-    mean_response_times_list, mean_jobs_in_system_list, server_utilization_list = [], [], []
-
-    for arrival_rate in rates_to_check: 
-        mean_response_time, mean_jobs_in_system, server_utilization = simmulate_poisson_process(NUMBER_OF_JOBS, arrival_rate, JOB_SIZE_RATE)
-        mean_response_times_list.append(mean_response_time)
-        mean_jobs_in_system_list.append(mean_jobs_in_system)
-        server_utilization_list.append(server_utilization)
-
-    print("!!FINISHED PROCESS!!")
-    plot_two_graphs(rates_to_check, mean_jobs_in_system_list,  mean_response_times_list, server_utilization_list)
+    rates_to_check2 = [2*i/10.0 for i in range(5, 10, 1)]
+    get_stats_for_poisson_process(2, rates_to_check2)
     
     
 
