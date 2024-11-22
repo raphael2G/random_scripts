@@ -46,6 +46,9 @@ def simmulate_poisson_process(NUM_JOBS: float, ARRIVAL_RATE: float, JOB_SIZE_RAT
             # update global clock
             global_clock += time_to_next_arrival
 
+            # decrease time to next completion since we just decremented
+            time_to_next_completion -= time_to_next_arrival
+
             # increase jobs in the system
             jobs_in_system += 1
 
@@ -85,6 +88,9 @@ def simmulate_poisson_process(NUM_JOBS: float, ARRIVAL_RATE: float, JOB_SIZE_RAT
 
             # update global clock
             global_clock += time_to_next_completion
+
+            # update the time to next arrival since we passed time
+            time_to_next_arrival -= time_to_next_completion
 
             # decrement jobs in the system
             jobs_in_system -= 1
@@ -136,7 +142,7 @@ def get_stats_for_poisson_process(JOB_SIZE_RATE, rates_to_check: list[float], NU
 
 
 if __name__ == "__main__":
-    rates_to_check1 = [i/10.0 for i in range(5, 11, 1)]  
+    rates_to_check1 = [i/10.0 for i in range(5, 10, 1)]  
     get_stats_for_poisson_process(1, rates_to_check1)
 
     rates_to_check2 = [2*i/10.0 for i in range(5, 10, 1)]
